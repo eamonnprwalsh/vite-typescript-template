@@ -33,11 +33,17 @@ describe('useSearchResults', () => {
   it('should handle error during fetching', async () => {
     const errorMessage = 'Failed to fetch posts';
     (fetchPosts as jest.Mock).mockRejectedValueOnce(new Error(errorMessage));
-
     await act(async () => {
-      renderHook(() => useSearchResults());
+      const { result, waitForNextUpdate } = renderHook(() =>
+        useSearchResults()
+      );
 
-      await expect(fetchPosts()).rejects.toThrowError(errorMessage);
+      expect(result.current).toEqual([]);
+
+      await waitForNextUpdate();
+
+      expect(result.error).toEqual(new Error(errorMessage));
+      expect(fetchPosts).toHaveBeenCalledTimes(1);
     });
   });
 });

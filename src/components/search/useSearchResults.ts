@@ -4,14 +4,16 @@ import { Posts } from './interfaces';
 
 export const useSearchResults = (): Posts[] => {
   const [posts, setPosts] = useState<Posts[]>([]);
+  const [, /* error */ setError] = useState();
+  let results: any;
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const results = await fetchPosts();
-        setPosts(results);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      }
+      results = await fetchPosts().catch((error) => {
+        setError(() => {
+          throw new Error(error.message);
+        });
+      });
+      setPosts(results);
     };
     fetchData();
   }, []);
