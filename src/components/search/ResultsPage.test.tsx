@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import ResultsPage from './ResultsPage';
 
-jest.mock('./useSearchResults', () => ({
+vi.mock('./useSearchResults', () => ({
   useSearchResults: () => [
     { title: 'Title 1', body: 'Body 1' },
     { title: 'Title 2', body: 'Body 2' },
   ],
 }));
 
-jest.mock('./useCardStyles', () => ({
+vi.mock('./useCardStyles', () => ({
   useStyles: () => ({
     card: 'mock-card',
     title: 'mock-title',
