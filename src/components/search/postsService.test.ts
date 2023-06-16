@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { fetchPosts } from './postsService';
 
-jest.mock('axios');
+vi.mock('axios');
 
 describe('fetchPosts', () => {
   it('should fetch posts successfully', async () => {
@@ -11,7 +11,7 @@ describe('fetchPosts', () => {
     ];
 
     // Mock the axios.get method to return a successful response
-    (axios.get as jest.Mock).mockResolvedValue({ data: mockData });
+    axios.get.mockResolvedValue({ data: mockData });
 
     // Call the fetchPosts function
     const result = await fetchPosts();

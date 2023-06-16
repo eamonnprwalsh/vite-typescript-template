@@ -2,11 +2,11 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { useSearchResults } from './useSearchResults';
 import { fetchPosts } from './postsService';
 
-jest.mock('./postsService');
+vi.mock('./postsService');
 
 describe('useSearchResults', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should fetch and return posts', async () => {
@@ -15,7 +15,7 @@ describe('useSearchResults', () => {
       { id: 2, title: 'Post 2', body: 'Body of Post 2' },
     ];
 
-    (fetchPosts as jest.Mock).mockResolvedValueOnce(mockPosts);
+    fetchPosts.mockResolvedValueOnce(mockPosts);
 
     await act(async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
